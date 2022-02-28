@@ -1,0 +1,16 @@
+:set number
+
+if has("autocmd")
+  augroup templates
+    autocmd BufNewFile *.md 0r ~/.vim/templates/skeleton_md
+  augroup END
+endif
+
+" WSL yank support
+let s:clip = '/mnt/c/WINDOWS/system32/clip.exe'  " change this path according to your mount point
+if executable(s:clip)
+    augroup WSLYank
+        autocmd!
+        autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+    augroup END
+endif
